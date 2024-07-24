@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eS+UC0BVqGc=",
+  "dgSpecHash": "Cz3N0ECPMPw=",
   "success": true,
-  "projectFilePath": "C:\\work\\dataLogging\\dataLogging.csproj",
+  "projectFilePath": "C:\\work\\Github\\GreenThumbDataLogging\\dataLogging.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marco\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\8.0.0\\runtime.linux-arm.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
     "C:\\Users\\marco\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\8.0.0\\runtime.linux-arm64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\work\\dataLogging\\dataLogging.csproj": {}
+    "C:\\work\\Github\\GreenThumbDataLogging\\dataLogging.csproj": {}
   },
   "projects": {
-    "C:\\work\\dataLogging\\dataLogging.csproj": {
+    "C:\\work\\Github\\GreenThumbDataLogging\\dataLogging.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\work\\dataLogging\\dataLogging.csproj",
+        "projectUniqueName": "C:\\work\\Github\\GreenThumbDataLogging\\dataLogging.csproj",
         "projectName": "dataLogging",
-        "projectPath": "C:\\work\\dataLogging\\dataLogging.csproj",
+        "projectPath": "C:\\work\\Github\\GreenThumbDataLogging\\dataLogging.csproj",
         "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
-        "outputPath": "C:\\work\\dataLogging\\obj\\",
+        "outputPath": "C:\\work\\Github\\GreenThumbDataLogging\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\marco\\AppData\\Roaming\\NuGet\\NuGet.Config"

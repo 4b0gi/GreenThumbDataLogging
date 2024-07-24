@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dataLogging")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae3e91d028f5495f2ab99377c3b9a319c15fc6af")]
 [assembly: System.Reflection.AssemblyProductAttribute("dataLogging")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dataLogging")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
