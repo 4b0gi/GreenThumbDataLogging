@@ -7,7 +7,7 @@ using MyNamespace;  // Dies gewährleistet, dass Sie den richtigen Namespace fü
 class Program
 {
     static void Main(string[] args){
-        MyNamespace.Logger.LoggingCapacitor();
+        MyNamespace.Logger.logging1000Val();
 /*         // Initialisieren und Starten der Logging-Sessions für zwei unterschiedliche Ports
         MyNamespace.LoggingSession session1 = MyNamespace.Logger.InitLoggingSession("COM5");
         MyNamespace.LoggingSession session2 = MyNamespace.Logger.InitLoggingSession("COM8");

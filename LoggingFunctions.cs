@@ -12,25 +12,26 @@ namespace MyNamespace
         public static void logging1000Val()
         {
             string portName = "COM5";
-            Console.WriteLine("Welches Messgerät?");
-            string measurementDevice = Console.ReadLine() ?? "NaN";  // Nimmt den Messwert in mm vom Benutzer entgegen.
+            // Console.WriteLine("Welches Messgerät?");
+            string measurementDevice =  "1" ;// Console.ReadLine() ?? "NaN";  // Nimmt den Messwert in mm vom Benutzer entgegen.
 
             Console.WriteLine("Welche Werte in mm?");
             string measurementValue = Console.ReadLine() ?? "NaN";  // Nimmt den Messwert in mm vom Benutzer entgegen.3
 
-            string fileName = $"{measurementValue}mm_M{measurementDevice}_1V8_{DateTime.Now:ddMMyyyy_HHmmss}.txt";
+            string fileName = $"{measurementValue}mm_M{measurementDevice}_Coated_{DateTime.Now:ddMMyyyy_HHmm}.txt";
             using (SerialPort port = new SerialPort(portName, 9600, Parity.None, 8, StopBits.One))
             {
                 try
                 {
                     port.Open();
                     Console.WriteLine($"Port {portName} geöffnet. Empfangene Daten werden in die Datei {fileName} geschrieben.");
-                    using (StreamWriter writer = new StreamWriter("../../../calibrationData/Calibration_Supply_1V8/"+ fileName, true))
+                    using (StreamWriter writer = new StreamWriter("C:/Users/marco/OneDrive - OST/General/03_HW/03_SENSOREINHEIT/08_Logging_Auswertung/01_PCB/03_Auswertung_Beschichtung/Coating_M1/"+ fileName, true)) 
+/*                     using (StreamWriter writer = new StreamWriter("../../../calibrationData/Calibration_Supply_1V8/"+ fileName, true)) */
                     {
                         writer.WriteLine($"COM-Port: {portName}");
-                        writer.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}");
+                        writer.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
                         writer.WriteLine($"Messgerät: {measurementDevice}");
-                        writer.WriteLine($"Versorgungsspannung 1.8030 V");
+                        writer.WriteLine($"Versorgungsspannung 2.8033 V");
                         writer.WriteLine($"Referenzspannung 0.55 V");
                         writer.WriteLine($"Widerstand: 1MOhm");
                         int count = 0;
@@ -43,7 +44,7 @@ namespace MyNamespace
                             dataToWrite += logEntry + "\n";
 
                             count++;
-                            if (count >= 1000)
+                            if (count >= 1004)
                             {
                                 writer.Write(dataToWrite);
                                 writer.Flush(); // Stellen Sie sicher, dass alle Daten sofort in die Datei geschrieben werden
@@ -78,14 +79,14 @@ namespace MyNamespace
                 {
                     port.Open();
                     Console.WriteLine($"Port {portName} geöffnet. Empfangene Daten werden in die Datei {fileName} geschrieben.");
-                    using (StreamWriter writer = new StreamWriter("C:/work/dataLogging/calibrationData/CapacitorTestingEarth/"+ fileName, true))
+                    using (StreamWriter writer = new StreamWriter("C:/work/dataLogging/calibrationData/Hysteresis/"+ fileName, true))
                     {
 /*                         writer.WriteLine($"COM-Port: {portName}"); */
                         writer.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
                         writer.WriteLine($"T{measurementDevice}");
-/*                         writer.WriteLine($"Versorgungsspannung 1.8030 V");
+                        writer.WriteLine($"Versorgungsspannung 2.8030 V");
                         writer.WriteLine($"Referenzspannung 0.55 V");
-                        writer.WriteLine($"Widerstand: 1MOhm"); */
+                        writer.WriteLine($"Widerstand: 1MOhm");
                         int count = 0;
                         string dataToWrite = "";
 
@@ -96,7 +97,7 @@ namespace MyNamespace
                             dataToWrite += logEntry;
 
                             count++;
-                            if (count >= 100)
+                            if (count >= 1000)
                             {
                                 writer.Write(dataToWrite);
                                 writer.Flush(); // Stellen Sie sicher, dass alle Daten sofort in die Datei geschrieben werden
