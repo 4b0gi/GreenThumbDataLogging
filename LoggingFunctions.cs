@@ -11,9 +11,9 @@ namespace MyNamespace
     {
         public static void logging1000Val()
         {
-            string portName = "COM5";
+            string portName = "COM10";
             // Console.WriteLine("Welches Messgerät?");
-            string measurementDevice =  "1" ;// Console.ReadLine() ?? "NaN";  // Nimmt den Messwert in mm vom Benutzer entgegen.
+            string measurementDevice =  "4" ;// Console.ReadLine() ?? "NaN";  // Nimmt den Messwert in mm vom Benutzer entgegen.
 
             Console.WriteLine("Welche Werte in mm?");
             string measurementValue = Console.ReadLine() ?? "NaN";  // Nimmt den Messwert in mm vom Benutzer entgegen.3
@@ -25,13 +25,13 @@ namespace MyNamespace
                 {
                     port.Open();
                     Console.WriteLine($"Port {portName} geöffnet. Empfangene Daten werden in die Datei {fileName} geschrieben.");
-                    using (StreamWriter writer = new StreamWriter("C:/Users/marco/OneDrive - OST/General/03_HW/03_SENSOREINHEIT/08_Logging_Auswertung/01_PCB/03_Auswertung_Beschichtung/Coating_M1/"+ fileName, true)) 
+                    using (StreamWriter writer = new StreamWriter("C:/Users/marco/OneDrive - OST/General/03_HW/03_SENSOREINHEIT/08_Logging_Auswertung/03_Primitivo/"+ fileName, true)) 
 /*                     using (StreamWriter writer = new StreamWriter("../../../calibrationData/Calibration_Supply_1V8/"+ fileName, true)) */
                     {
                         writer.WriteLine($"COM-Port: {portName}");
                         writer.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
                         writer.WriteLine($"Messgerät: {measurementDevice}");
-                        writer.WriteLine($"Versorgungsspannung 2.8033 V");
+                        writer.WriteLine($"Versorgungsspannung 2.7997 V");
                         writer.WriteLine($"Referenzspannung 0.55 V");
                         writer.WriteLine($"Widerstand: 1MOhm");
                         int count = 0;
@@ -44,7 +44,7 @@ namespace MyNamespace
                             dataToWrite += logEntry + "\n";
 
                             count++;
-                            if (count >= 1004)
+                            if (count >= 10004)
                             {
                                 writer.Write(dataToWrite);
                                 writer.Flush(); // Stellen Sie sicher, dass alle Daten sofort in die Datei geschrieben werden
@@ -129,7 +129,7 @@ namespace MyNamespace
                 using (StreamWriter writer = new StreamWriter(path, true)){
                         writer.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}");
                         writer.WriteLine($"Messgerät: {measurementDevice}");
-                        writer.WriteLine($"Versorgungsspannung 2.8051 V");
+                        writer.WriteLine($"Versorgungsspannung 2.8002 V");
                         writer.WriteLine($"Referenzspannung 0.55 V");
                 }
             }
@@ -154,30 +154,30 @@ namespace MyNamespace
 
         // neu
         public static LoggingSession InitLoggingSession(string portName)
+        {
+            Console.WriteLine($"Bitte geben Sie das Messgerät für {portName} ein:");
+            string measurementDevice = Console.ReadLine() ?? "NaN";
+            string filename = $"M{measurementDevice}_ERDE_{DateTime.Now:ddMMHHmmss}.csv";
+            string filePath = Path.Combine(@"C:\Users\marco\OneDrive - OST\General\03_HW\03_SENSOREINHEIT\08_Logging_Auswertung\01_PCB\04_Auswertung_Langzeitmessung", filename);
+
+            try
             {
-                Console.WriteLine($"Bitte geben Sie das Messgerät für {portName} ein:");
-                string measurementDevice = Console.ReadLine() ?? "NaN";
-                string filename = $"M{measurementDevice}_ERDE_{DateTime.Now:yyyyMMddHHmmss}.txt";
-                string filePath = Path.Combine("..", "..", "..", "calibrationData", "refMeasInEarth", filename);
-
-                try
+                using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
-                    using (StreamWriter writer = new StreamWriter(filePath, true))
-                    {
-                        writer.WriteLine($"Messgerät: {measurementDevice}");
-                        writer.WriteLine($"Port: {portName}");
-                        writer.WriteLine($"Erstellungszeitpunkt: {DateTime.Now:yyyy-MM-dd HH:mm}");
-                    }
-                    return new LoggingSession(portName, filePath); // Stellen Sie sicher, dass das Rückgabeobjekt erstellt wird
+                    writer.WriteLine($"Messgerät: {measurementDevice}");
+                    writer.WriteLine($"Port: {portName}");
+                    writer.WriteLine($"Erstellungszeitpunkt: {DateTime.Now:dd-MM-yyyy HH:mm}");
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Ein unerwarteter Fehler ist aufgetreten: {e.Message}");
-                    return null; // Geben Sie null oder eine alternative Fehlerbehandlung zurück
-                }
+                return new LoggingSession(portName, filePath); // Stellen Sie sicher, dass das Rückgabeobjekt erstellt wird
             }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Ein unerwarteter Fehler ist aufgetreten: {e.Message}");
+                return null; // Geben Sie null oder eine alternative Fehlerbehandlung zurück
+            }
+        }
 
-        public static void StartLogging(LoggingSession session)
+        public static void StartLogging(LoggingSession session, int nOfRuns)
         {
             using (SerialPort port = new SerialPort(session.PortName, 9600, Parity.None, 8, StopBits.One))
             {
@@ -187,11 +187,22 @@ namespace MyNamespace
                     Console.WriteLine($"Port {session.PortName} geöffnet. Empfangene Daten werden in die Datei {session.FilePath} geschrieben.");
                     using (StreamWriter writer = new StreamWriter(session.FilePath, true))
                     {
-                        int dataPoints = 100; // Anzahl der Messpunkte pro Minute
+                        int dataPoints = nOfRuns; // Anzahl der Messpunkte pro Minute
+
                         while (true)
                         {
+                            if (DateTime.Now.Second == 20)
+                            {
+                                break;
+                            }
+                            Thread.Sleep(100); // Überprüfe jede 100 Millisekunden, ob die Sekunde gleich 0 ist
+                        }
+
+                            while (true)
+                        {
                             // Beginne eine neue Zeile mit dem aktuellen Zeitstempel
-                            string dataToWrite = DateTime.Now.ToString("yyyy-MM-dd") + "," + DateTime.Now.ToString("HH:mm:ss") + "," ;
+                            DateTime startTime = DateTime.Now; // Startzeit erfassen
+                            string dataToWrite = DateTime.Now.ToString("dd.MM.yyyy ")+ DateTime.Now.ToString("HH:mm:ss") + "," ;
 
                             // Sammle die Datenpunkte in derselben Zeile
                             for (int i = 0; i < dataPoints; i++)
@@ -205,7 +216,15 @@ namespace MyNamespace
                             writer.Flush(); // Sicherstellen, dass die Daten sofort in die Datei geschrieben werden
 
                             Console.WriteLine("Daten geschrieben. Warte 1 Minute bis zum nächsten Durchgang.");
-                            Thread.Sleep(60000); // Wartet eine Minute (60000 Millisekunden) bis zum nächsten Schreibvorgang
+                        DateTime endTime = DateTime.Now; // Endzeit erfassen
+                        TimeSpan readDuration = endTime - startTime; // Differenz berechnen
+                        int readDurationMilliseconds = (int)readDuration.TotalMilliseconds; // In Ganzzahl umwandeln
+
+                        Console.WriteLine($"Daten geschrieben. Lesevorgang dauerte {readDurationMilliseconds} Millisekunden. Warte 1 Minute bis zum nächsten Durchgang.");
+
+                        // Warte bis zur nächsten vollen Minute
+                        int millisecondsUntilNextMinute = 60000 - readDurationMilliseconds;
+                        Thread.Sleep(millisecondsUntilNextMinute);
                         }
                     }
                 }

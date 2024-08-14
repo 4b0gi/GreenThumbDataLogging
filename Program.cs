@@ -7,20 +7,20 @@ using MyNamespace;  // Dies gewährleistet, dass Sie den richtigen Namespace fü
 class Program
 {
     static void Main(string[] args){
-        MyNamespace.Logger.logging1000Val();
-/*         // Initialisieren und Starten der Logging-Sessions für zwei unterschiedliche Ports
+         //MyNamespace.Logger.logging1000Val();
+        // Initialisieren und Starten der Logging-Sessions für zwei unterschiedliche Ports
         MyNamespace.LoggingSession session1 = MyNamespace.Logger.InitLoggingSession("COM5");
         MyNamespace.LoggingSession session2 = MyNamespace.Logger.InitLoggingSession("COM8");
 
         // Starten des parallelen Loggings für beide Sessions in separaten Threads
-        Thread thread1 = new Thread(() => MyNamespace.Logger.StartLogging(session1));
-        Thread thread2 = new Thread(() => MyNamespace.Logger.StartLogging(session2));
+        Thread thread1 = new Thread(() => MyNamespace.Logger.StartLogging(session1,1005));
+        Thread thread2 = new Thread(() => MyNamespace.Logger.StartLogging(session2,100));
 
         thread1.Start();
         thread2.Start();
 
         thread1.Join(); // Warten, bis thread1 beendet ist
-        thread2.Join(); // Warten, bis thread2 beendet ist */
+        thread2.Join(); // Warten, bis thread2 beendet ist
     }
 }
 
